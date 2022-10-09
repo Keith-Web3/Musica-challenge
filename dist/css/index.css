@@ -84,7 +84,7 @@ header input {
   outline: none;
   border-radius: 7px;
   background-color: transparent;
-  box-shadow: 2px 2px 5px #24292b, inset 2px 2px 5px #111415;
+  box-shadow: 2px 2px 5px #292e31, inset 2px 2px 5px #111415;
   padding: 0.25em 1em;
   color: #fff;
   font-weight: 400;
