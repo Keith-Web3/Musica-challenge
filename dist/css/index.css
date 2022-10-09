@@ -59,6 +59,11 @@ select {
     scroll-behavior: auto !important;
   }
 }
+body,
+html {
+  overflow-x: hidden;
+}
+
 body {
   background-color: #1d2123;
   padding: 1em;
@@ -136,6 +141,55 @@ header nav {
 }
 .section-one .curated-playlists__likes img:nth-child(2) {
   width: min(10%, 27px);
+}
+.section-one .top-charts {
+  margin-top: 2em;
+}
+.section-one .top-charts h2 {
+  font-size: 1.43rem;
+  margin-bottom: 0.7em;
+}
+.section-one .top-charts .top-charts__container {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1em;
+  overflow-x: auto;
+}
+.section-one .top-charts .top-charts__container .top-chart {
+  display: grid;
+  grid-template: repeat(4, auto)/repeat(2, auto);
+  grid-template-areas: "img like" "name ." "artist ." "time .";
+  column-gap: 2em;
+  background-color: #1a1e1f;
+  border-radius: 20px;
+  width: max-content;
+  padding: 1em;
+}
+.section-one .top-charts .top-charts__container .top-chart h3 {
+  font-size: 1.214rem;
+  font-weight: 400;
+  grid-area: name;
+  margin-top: 0.4em;
+}
+.section-one .top-charts .top-charts__container .top-chart__artist {
+  font-size: 0.857rem;
+  color: rgba(255, 255, 255, 0.5);
+  grid-area: artist;
+}
+.section-one .top-charts .top-charts__container .top-chart__length {
+  grid-area: time;
+  margin-top: 1em;
+}
+.section-one .top-charts .top-charts__container .top-chart__cover {
+  grid-area: img;
+  width: min(50%, 105px);
+}
+.section-one .top-charts .top-charts__container .top-chart .like {
+  grid-area: like;
+  margin-left: auto;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  padding: 0.5em;
+  border-radius: 50%;
 }
 
 /*# sourceMappingURL=index.css.map */
