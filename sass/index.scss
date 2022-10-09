@@ -24,7 +24,8 @@ header {
     outline: none;
     border-radius: 7px;
     background-color: transparent;
-    box-shadow: 2px 2px 5px darken(#1d2123, 5%);
+    box-shadow: 2px 2px 5px lighten(#1d2123, 3%),
+      inset 2px 2px 5px darken(#1d2123, 5%);
     padding: $spacer * 0.25 $spacer;
     color: #fff;
     font-weight: 400;
