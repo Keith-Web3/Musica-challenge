@@ -1,0 +1,84 @@
+@use 'resets';
+
+$spacer: 1em;
+
+body {
+  background-color: #1d2123;
+  padding: $spacer;
+  font-family: 'Quicksand', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
+  color: #efeee0;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacer;
+  position: relative;
+
+  input {
+    appearance: none;
+    border: none;
+    outline: none;
+    border-radius: 7px;
+    background-color: transparent;
+    box-shadow: 2px 2px 5px darken(#1d2123, 5%);
+    padding: $spacer * 0.25 $spacer;
+    color: #fff;
+    font-weight: 400;
+    width: 100%;
+    order: 2;
+  }
+  .fa-bars {
+    font-size: 1.4rem;
+    color: #efeee0;
+  }
+  & > img {
+    width: min(9%, 30px);
+    margin-left: $spacer * 0.5;
+  }
+  .fa-magnifying-glass {
+    color: rgba(#fff, 0.25);
+    font-size: 1.2rem;
+    margin-left: auto;
+  }
+  nav {
+    display: none;
+  }
+}
+.section-one {
+  margin-top: $spacer;
+
+  .curated-playlists {
+    padding: $spacer * 2;
+    background-color: #609eaf;
+    border-radius: 20px;
+    background-image: url(../../images/wave.svg);
+    background-repeat: no-repeat;
+    background-position: top right;
+
+    h2 {
+      font-size: 0.857rem;
+      font-weight: 400;
+    }
+    &__title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-top: $spacer * 4;
+    }
+    &__likes {
+      margin-top: $spacer;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $spacer;
+      font-size: 1.45rem;
+
+      img:nth-child(1) {
+        width: min(50%, 124px);
+      }
+      img:nth-child(2) {
+        width: min(10%, 27px);
+      }
+    }
+  }
+}
