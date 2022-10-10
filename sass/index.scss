@@ -11,12 +11,24 @@ body {
   font-family: 'Quicksand', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
   color: #efeee0;
   position: relative;
+  @media (min-width: 1050px) {
+    display: flex;
+    gap: $spacer * 2;
+  }
 }
 header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: $spacer;
+
+  @media (min-width: 1050px) {
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    width: max-content;
+    position: relative;
+  }
 
   input {
     appearance: none;
@@ -26,24 +38,45 @@ header {
     background-color: transparent;
     box-shadow: 2px 2px 5px lighten(#1d2123, 5%),
       inset 2px 2px 5px darken(#1d2123, 5%);
-    padding: $spacer * 0.25 $spacer;
+    padding: $spacer * 0.4 $spacer;
     color: #fff;
     font-weight: 400;
     width: 100%;
     order: 2;
+
+    @media (min-width: 1050px) {
+      position: absolute;
+      inset: 0 auto auto 100%;
+      transform: translateX($spacer * 2);
+      min-width: 400px;
+    }
   }
   .fa-bars {
     font-size: 1.4rem;
     color: #efeee0;
+    @media (min-width: 735px) {
+      display: none;
+    }
   }
   & > img {
     width: min(9%, 30px);
     margin-left: $spacer * 0.5;
+
+    @media (min-width: 1050px) {
+      width: min(100%, 35px);
+      height: max-content;
+      margin: 0;
+      margin-bottom: $spacer;
+    }
   }
   .fa-magnifying-glass {
     color: rgba(#fff, 0.25);
     font-size: 1.2rem;
     margin-left: auto;
+
+    @media (min-width: 735px) {
+      display: none;
+    }
   }
   nav {
     position: absolute;
@@ -59,22 +92,70 @@ header {
     font-size: 1.214rem;
     font-weight: 700;
     padding: $spacer;
+    @media (min-width: 735px) {
+      position: unset;
+      transform: translateX(0);
+      flex-direction: row;
+      height: max-content;
+      gap: $spacer;
+      background-color: unset;
+      padding: 0;
+      margin-left: auto;
+
+      i,
+      img {
+        @media (max-width: 1050px) {
+          display: none !important;
+        }
+      }
+      ul {
+        display: flex;
+        gap: $spacer;
+      }
+    }
+    @media (min-width: 1050px) {
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+    }
     &.active {
       transform: translateX(0);
     }
 
     & > i {
       margin-left: auto;
+      @media (min-width: 1050px) {
+        display: none !important;
+      }
     }
     i,
     p {
       transition: color 250ms linear;
+    }
+    p {
+      @media (min-width: 1050px) {
+        display: none;
+      }
+    }
+    ul {
+      @media (min-width: 1050px) {
+        flex-direction: column;
+        background-color: #1a1e1f;
+        padding: $spacer;
+        border-radius: 32px;
+        gap: $spacer * 2;
+
+        i {
+          font-size: 1.5rem;
+        }
+      }
     }
     li {
       display: flex;
       align-items: center;
       gap: $spacer;
       line-height: 4;
+      cursor: pointer;
 
       &:hover {
         i {
@@ -82,6 +163,7 @@ header {
         }
         p {
           color: #fff;
+          user-select: none;
         }
       }
     }
@@ -89,6 +171,12 @@ header {
 }
 .section-one {
   margin-top: $spacer;
+  @media (min-width: 1050px) {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: $spacer * 2;
+    margin-top: $spacer * 4.5;
+  }
 
   .curated-playlists {
     padding: $spacer * 2;
@@ -97,6 +185,14 @@ header {
     background-image: url(../../images/wave.svg);
     background-repeat: no-repeat;
     background-position: top right;
+    @media (min-width: 700px) {
+      background-image: url(../../images/Pexels\ Photo\ by\ Eric\ Esma.svg),
+        url(../../images/Vector.svg);
+      background-size: auto 100%;
+    }
+    @media (min-width: 1050px) {
+      // width: 60%;
+    }
 
     h2 {
       font-size: 0.857rem;
@@ -106,6 +202,15 @@ header {
       font-size: 2.5rem;
       font-weight: 700;
       margin-top: $spacer * 4;
+      @media (min-width: 700px) {
+        margin-top: 3rem;
+      }
+    }
+    &__desc {
+      @media (min-width: 700px) {
+        width: min(55%, 345px);
+        margin-bottom: 3.2rem;
+      }
     }
     &__likes {
       margin-top: $spacer;
@@ -126,6 +231,10 @@ header {
 
   .top-charts {
     margin-top: $spacer * 2;
+    @media (min-width: 1050px) {
+      // width: 35%;
+      margin-top: 0;
+    }
 
     h2 {
       font-size: 1.43rem;
@@ -134,24 +243,39 @@ header {
     .top-charts__container {
       display: grid;
       grid-auto-flow: column;
+      justify-content: space-between;
       gap: $spacer;
       overflow-x: auto;
+      @media (min-width: 1050px) {
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        gap: $spacer * 0.5;
+      }
 
       .top-chart {
         display: grid;
         grid-template: repeat(4, auto) / repeat(2, auto);
         grid-template-areas: 'img like' 'name .' 'artist .' 'time .';
-        column-gap: $spacer * 2;
+        column-gap: $spacer;
         background-color: #1a1e1f;
         border-radius: 20px;
         width: max-content;
         padding: $spacer;
+        @media (min-width: 1050px) {
+          width: 100%;
+          grid-template: repeat(3, auto) / auto 1fr auto;
+          grid-template-areas: 'img name like' 'img artist like' 'img  time like';
+        }
 
         h3 {
           font-size: 1.214rem;
           font-weight: 400;
           grid-area: name;
           margin-top: $spacer * 0.4;
+          @media (min-width: 1050px) {
+            margin-top: 0;
+          }
         }
         &__artist {
           font-size: 0.857rem;
@@ -161,10 +285,18 @@ header {
         &__length {
           grid-area: time;
           margin-top: $spacer;
+          @media (min-width: 1050px) {
+            margin-top: 0;
+          }
         }
         &__cover {
           grid-area: img;
           width: min(50%, 105px);
+          @media (min-width: 1050px) {
+            width: 100%;
+            height: 100%;
+            object-fit: unset;
+          }
         }
         .like {
           grid-area: like;
@@ -172,6 +304,9 @@ header {
           border: 1px solid rgba(255, 255, 255, 0.11);
           padding: $spacer * 0.5;
           border-radius: 50%;
+          @media (min-width: 1050px) {
+            margin-block: auto;
+          }
         }
       }
     }
@@ -214,12 +349,89 @@ aside {
   position: fixed;
   padding: $spacer;
   inset: auto 0 0;
+  @media (min-width: 900px) {
+    display: grid;
+    grid-template: repeat(3, auto) / auto auto 1fr auto;
+    grid-template-areas: 'icons icons icons icons' 'img text . volume' '. . seek .';
+    gap: 0 $spacer;
+  }
+  @media (min-width: 1050px) {
+    padding-block: 0;
+    padding-bottom: $spacer;
+    padding-inline: $spacer * 7.5;
+  }
+
+  .seek {
+    grid-area: seek;
+  }
+  .volume__container,
+  .seek {
+    display: none;
+    position: relative;
+    height: max-content;
+    @media (min-width: 900px) {
+      display: unset;
+      --progress: 0;
+
+      input {
+        opacity: 0;
+        width: 100%;
+        z-index: 4;
+        cursor: pointer;
+      }
+      &::before {
+        content: '';
+        visibility: visible;
+        position: absolute;
+        inset: 50% auto auto var(--progress);
+        transform: translateY(-50%);
+        width: 13px;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        background-color: #facd66;
+        outline: 2px solid #fff;
+        outline-offset: 4px;
+        box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.92);
+      }
+      &::after {
+        content: '';
+        visibility: visible;
+        position: absolute;
+        inset: 50% 0 auto 0;
+        transform: translateY(-50%);
+        height: 4px;
+        border-radius: 50px;
+        z-index: -1;
+        background-color: rgba(255, 255, 255, 0.04);
+        background-image: linear-gradient(
+          to right,
+          #facd66 var(--progress),
+          transparent var(--progress)
+        );
+      }
+    }
+  }
+  .volume {
+    display: flex;
+    gap: $spacer;
+    grid-area: volume;
+  }
+  .seek {
+    input {
+      width: 100%;
+    }
+  }
 
   & > img {
     width: min(25%, 68px);
+    grid-area: img;
+    @media (min-width: 900px) {
+      width: min(100%, 68px);
+    }
   }
   .text {
     font-weight: 700;
+    grid-area: text;
 
     &__title {
       font-size: 1.4rem;
@@ -232,9 +444,30 @@ aside {
   .icons {
     display: flex;
     margin-left: auto;
+    grid-area: icons;
+    @media (min-width: 550px) {
+      align-items: center;
+      gap: $spacer * 1.5;
+    }
+    @media (min-width: 900px) {
+      margin-inline: auto;
+      transform: translateY(50%);
+    }
 
+    i {
+      cursor: pointer;
+      color: #facd66;
+      font-size: 2rem;
+    }
     img {
       cursor: pointer;
+      min-width: 25px;
+    }
+    .tablet {
+      display: none;
+      @media (min-width: 550px) {
+        display: block;
+      }
     }
   }
 }

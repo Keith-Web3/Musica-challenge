@@ -23,10 +23,15 @@
   </head>
   <body>
     <header>
-      <input type="text" aria-label="search" id="search" />
+      <input
+        type="text"
+        aria-label="search"
+        name="search"
+        id="search"
+        placeholder="Search here"
+      />
       <i class="fa-solid fa-bars harmburger-toggle"></i>
       <img src="./icons/logo.svg" alt="logo" />
-      <i class="fa-solid fa-magnifying-glass"></i>
       <nav>
         <i class="fa-solid fa-xmark harmburger-toggle"></i>
         <ul>
@@ -58,6 +63,7 @@
           </li>
         </ul>
       </nav>
+      <i class="fa-solid fa-magnifying-glass"></i>
     </header>
     <main>
       <section class="section-one">
@@ -156,8 +162,20 @@
         <p class="text__artist">James</p>
       </div>
       <div class="icons">
-        <img src="./icons/Frame 7.svg" alt="play" />
+        <img src="./icons/shuffle.svg" alt="shuffle" class="tablet" />
+        <img src="./icons/previous.svg" alt="previous" class="tablet" />
+        <i class="fa-solid fa-circle-play"></i>
         <img src="./icons/next.svg" alt="next" />
+        <img src="./icons/repeate-one.svg" alt="repeat" class="tablet" />
+      </div>
+      <div class="volume">
+        <img src="./icons/volume-high.svg" alt="volume" />
+        <div class="volume__container">
+          <input type="range" name="volume" id="volume" value="0" />
+        </div>
+      </div>
+      <div class="seek">
+        <input aria-label="seek" name="seek" type="range" id="seek" value="0" />
       </div>
     </aside>
   </body>
