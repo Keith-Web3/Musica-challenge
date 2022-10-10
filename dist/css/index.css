@@ -493,9 +493,14 @@ aside .seek::after {
   }
 }
 aside .volume {
-  display: flex;
-  gap: 1em;
+  display: none;
   grid-area: volume;
+}
+@media (min-width: 900px) {
+  aside .volume {
+    display: flex;
+    gap: 1em;
+  }
 }
 aside .seek input {
   width: 100%;
@@ -524,6 +529,7 @@ aside .icons {
   display: flex;
   margin-left: auto;
   grid-area: icons;
+  gap: 1em;
 }
 @media (min-width: 550px) {
   aside .icons {

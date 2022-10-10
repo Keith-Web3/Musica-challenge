@@ -412,9 +412,12 @@ aside {
     }
   }
   .volume {
-    display: flex;
-    gap: $spacer;
+    display: none;
     grid-area: volume;
+    @media (min-width: 900px) {
+      display: flex;
+      gap: $spacer;
+    }
   }
   .seek {
     input {
@@ -445,6 +448,7 @@ aside {
     display: flex;
     margin-left: auto;
     grid-area: icons;
+    gap: $spacer;
     @media (min-width: 550px) {
       align-items: center;
       gap: $spacer * 1.5;
