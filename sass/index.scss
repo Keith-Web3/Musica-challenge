@@ -10,13 +10,13 @@ body {
   padding: $spacer $spacer $spacer * 7;
   font-family: 'Quicksand', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
   color: #efeee0;
+  position: relative;
 }
 header {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: $spacer;
-  position: relative;
 
   input {
     appearance: none;
@@ -46,7 +46,45 @@ header {
     margin-left: auto;
   }
   nav {
-    display: none;
+    position: absolute;
+    inset: 0 0 auto 0;
+    transform: translateX(120%);
+    transition: transform 250ms linear;
+    z-index: 4;
+    height: 100vh;
+    background-color: #1a1e1f;
+    color: rgba(#efeee0, 0.25);
+    display: flex;
+    flex-direction: column;
+    font-size: 1.214rem;
+    font-weight: 700;
+    padding: $spacer;
+    &.active {
+      transform: translateX(0);
+    }
+
+    & > i {
+      margin-left: auto;
+    }
+    i,
+    p {
+      transition: color 250ms linear;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      gap: $spacer;
+      line-height: 4;
+
+      &:hover {
+        i {
+          color: #facd66;
+        }
+        p {
+          color: #fff;
+        }
+      }
+    }
   }
 }
 .section-one {
