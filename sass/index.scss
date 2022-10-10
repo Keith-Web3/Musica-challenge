@@ -7,7 +7,7 @@ html {
 }
 body {
   background-color: #1d2123;
-  padding: $spacer;
+  padding: $spacer $spacer $spacer * 7;
   font-family: 'Quicksand', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
   color: #efeee0;
 }
@@ -136,6 +136,67 @@ header {
           border-radius: 50%;
         }
       }
+    }
+  }
+}
+.new-releases {
+  margin-top: $spacer * 2;
+
+  h2 {
+    font-size: 1.43rem;
+    margin-bottom: $spacer * 0.7;
+  }
+  &__container {
+    display: grid;
+    grid-auto-flow: column;
+    gap: $spacer;
+    overflow-x: auto;
+
+    .new-release {
+      font-size: 0.875rem;
+      width: max-content;
+
+      img {
+        width: min(100%, 153px);
+        margin-bottom: $spacer * 0.5;
+      }
+      .sub-text {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+aside {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: $spacer;
+  background-color: rgba(29, 33, 35, 0.3);
+  backdrop-filter: blur(15px);
+  position: fixed;
+  padding: $spacer;
+  inset: auto 0 0;
+
+  & > img {
+    width: min(25%, 68px);
+  }
+  .text {
+    font-weight: 700;
+
+    &__title {
+      font-size: 1.4rem;
+    }
+    &__artist {
+      font-size: 0.837rem;
+      opacity: 0.5;
+    }
+  }
+  .icons {
+    display: flex;
+    margin-left: auto;
+
+    img {
+      cursor: pointer;
     }
   }
 }
