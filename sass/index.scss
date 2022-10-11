@@ -328,6 +328,7 @@ header {
       img {
         width: 100%;
         max-width: 153px;
+        transition: filter 150ms linear;
         margin-bottom: $spacer * 0.5;
       }
       p {
@@ -428,6 +429,7 @@ aside {
   & > img {
     width: min(25%, 68px);
     grid-area: img;
+    border-radius: 14px;
     @media (min-width: 900px) {
       width: min(100%, 68px);
     }

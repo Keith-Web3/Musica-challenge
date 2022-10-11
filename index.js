@@ -2,6 +2,11 @@ let nav = document.querySelector('nav')
 let ranges = document.querySelectorAll('input[type=range]')
 let audio = document.querySelector('audio')
 let playBtn = document.querySelector('#play')
+let container = document.querySelector('.new-releases__container')
+let currMusicImg = document.querySelector('aside > img')
+let currMusicTitle = document.querySelector('.text__title')
+let currMusicArtist = document.querySelector('.text__artist')
+container.innerHTML = ''
 
 document.querySelectorAll('.harmburger-toggle').forEach(el => {
   el.addEventListener('click', function () {
@@ -54,6 +59,17 @@ let inter = new IntersectionObserver(
 )
 inter.observe(nav)
 
+const lazyLoader = new IntersectionObserver((entries, lazyLoader) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return
+    entry.target.addEventListener('load', function () {
+      this.style.width = '100%'
+      this.style.filter = 'unset'
+    })
+    entry.target.src = entry.target.dataset.src
+  })
+})
+
 const options = {
   method: 'GET',
   headers: {
@@ -61,31 +77,34 @@ const options = {
     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com',
   },
 }
-let container = document.querySelector('.new-releases__container')
-container.innerHTML = ''
 
 async function getMusicPlaylist() {
   let res = await fetch(
     'https://spotify23.p.rapidapi.com/playlist_tracks/?id=37i9dQZF1DX4Wsb4d7NKfP&offset=0&limit=100',
     options
   )
-  let { items } = await res.json()
+  let data = await res.json()
+  let { items } = data
   items.forEach(({ track }) => {
     let {
       album: {
-        images: [{ url }],
+        images: [{ url }, , { url: url1 }],
         name: artist,
       },
       name,
       preview_url,
     } = track
-    // console.log(track)
     container.innerHTML += `<div class="new-release" data-audio="${preview_url}">
-                              <img src="${url}" alt="" style="border-radius: 25px"/>
+                              <img src="${url1}" alt="" style="border-radius: 25px; filter: blur(2px);" data-src="${url}" class="ger"/>
                               <p>${name}</p>
                               <p class="sub-text">${artist}</p>
                             </div>`
   })
+  Array.from(container.children).forEach(child => {
+    child.firstElementChild.style.width = '153px'
+    lazyLoader.observe(child.firstElementChild)
+  })
+  console.log(data)
 }
 getMusicPlaylist()
 document.body.addEventListener('click', function (e) {
@@ -101,8 +120,10 @@ document.body.addEventListener('click', function (e) {
     `${audio.volume * 100}%`
   )
   ranges[0].value = audio.volume * 100
+  currMusicImg.src = releaseContainer.firstElementChild.src
+  currMusicTitle.textContent = releaseContainer.children[1].textContent
+  currMusicArtist.textContent = releaseContainer.lastElementChild.textContent
 })
-
 audio.addEventListener('play', function () {
   let duration = audio.duration
   const myInt = setInterval(() => {
