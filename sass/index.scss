@@ -190,9 +190,6 @@ header {
         url(../../images/Vector.svg);
       background-size: auto 100%;
     }
-    @media (min-width: 1050px) {
-      // width: 60%;
-    }
 
     h2 {
       font-size: 0.857rem;
@@ -232,7 +229,6 @@ header {
   .top-charts {
     margin-top: $spacer * 2;
     @media (min-width: 1050px) {
-      // width: 35%;
       margin-top: 0;
     }
 
@@ -330,8 +326,12 @@ header {
       width: max-content;
 
       img {
-        width: min(100%, 153px);
+        width: 100%;
+        max-width: 153px;
         margin-bottom: $spacer * 0.5;
+      }
+      p {
+        width: max-content;
       }
       .sub-text {
         opacity: 0.5;
@@ -474,4 +474,7 @@ aside {
       }
     }
   }
+}
+audio {
+  display: none;
 }

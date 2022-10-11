@@ -408,8 +408,12 @@ header nav li:hover p {
   width: max-content;
 }
 .new-releases__container .new-release img {
-  width: min(100%, 153px);
+  width: 100%;
+  max-width: 153px;
   margin-bottom: 0.5em;
+}
+.new-releases__container .new-release p {
+  width: max-content;
 }
 .new-releases__container .new-release .sub-text {
   opacity: 0.5;
@@ -559,6 +563,10 @@ aside .icons .tablet {
   aside .icons .tablet {
     display: block;
   }
+}
+
+audio {
+  display: none;
 }
 
 /*# sourceMappingURL=index.css.map */
