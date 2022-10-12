@@ -1,11 +1,12 @@
-let nav = document.querySelector('nav')
-let ranges = document.querySelectorAll('input[type=range]')
-let audio = document.querySelector('audio')
-let playBtn = document.querySelector('#play')
-let container = document.querySelector('.new-releases__container')
-let currMusicImg = document.querySelector('aside > img')
-let currMusicTitle = document.querySelector('.text__title')
-let currMusicArtist = document.querySelector('.text__artist')
+const nav = document.querySelector('nav')
+const ranges = document.querySelectorAll('input[type=range]')
+const audio = document.querySelector('audio')
+const playBtn = document.querySelector('#play')
+const container = document.querySelector('.new-releases__container')
+const currMusicImg = document.querySelector('aside > img')
+const currMusicTitle = document.querySelector('.text__title')
+const currMusicArtist = document.querySelector('.text__artist')
+let seekInterval
 container.innerHTML = ''
 
 document.querySelectorAll('.harmburger-toggle').forEach(el => {
@@ -28,6 +29,7 @@ function pause() {
   this.classList.remove('fa-circle-pause')
   this.classList.add('fa-circle-play')
   this.setAttribute('data-playboolean', 'true')
+  clearInterval(seekInterval)
   audio.pause()
 }
 function play() {
@@ -37,7 +39,7 @@ function play() {
   audio.play()
 }
 playBtn.addEventListener('click', function () {
-  if (audio.duration === 0) return
+  if (Number.isNaN(audio.duration)) return
   ;(this.dataset.playboolean !== 'true' ? pause : play).call(this)
 })
 
@@ -59,16 +61,21 @@ let inter = new IntersectionObserver(
 )
 inter.observe(nav)
 
-const lazyLoader = new IntersectionObserver((entries, lazyLoader) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return
-    entry.target.addEventListener('load', function () {
-      this.style.width = '100%'
-      this.style.filter = 'unset'
+const lazyLoader = new IntersectionObserver(
+  (entries, lazyLoader) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return
+      entry.target.addEventListener('load', function () {
+        this.style.width = '100%'
+        this.style.filter = 'unset'
+      })
+      entry.target.src = entry.target.dataset.src
     })
-    entry.target.src = entry.target.dataset.src
-  })
-})
+  },
+  {
+    threshold: 0.6,
+  }
+)
 
 const options = {
   method: 'GET',
@@ -126,9 +133,14 @@ document.body.addEventListener('click', function (e) {
 })
 audio.addEventListener('play', function () {
   let duration = audio.duration
-  const myInt = setInterval(() => {
+  play.call(playBtn)
+  seekInterval = setInterval(() => {
     let progress = (audio.currentTime / duration) * 100
     ranges[1].parentElement.style.setProperty('--progress', `${progress}%`)
     ranges[1].value = progress
+    console.log('on')
   }, 1000)
+})
+audio.addEventListener('pause', function () {
+  pause.call(playBtn)
 })

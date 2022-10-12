@@ -75,6 +75,7 @@ body {
   body {
     display: flex;
     gap: 2em;
+    padding-bottom: 10em;
   }
 }
 
@@ -238,14 +239,20 @@ header nav li:hover p {
   user-select: none;
 }
 
+@media (min-width: 1050px) {
+  main {
+    width: calc(100% - 4em - 69px);
+  }
+}
+
 .section-one {
   margin-top: 1em;
 }
 @media (min-width: 1050px) {
   .section-one {
     display: grid;
-    grid-template-columns: 60% 40%;
-    gap: 2em;
+    grid-template: 1fr/60% 2em 1fr;
+    grid-template-areas: "hero . top-list";
     margin-top: 4.5em;
   }
 }
@@ -256,6 +263,7 @@ header nav li:hover p {
   background-image: url(../../images/wave.svg);
   background-repeat: no-repeat;
   background-position: top right;
+  grid-area: hero;
 }
 @media (min-width: 700px) {
   .section-one .curated-playlists {
@@ -303,6 +311,7 @@ header nav li:hover p {
 @media (min-width: 1050px) {
   .section-one .top-charts {
     margin-top: 0;
+    grid-area: top-list;
   }
 }
 .section-one .top-charts h2 {
@@ -406,10 +415,12 @@ header nav li:hover p {
 .new-releases__container .new-release {
   font-size: 0.875rem;
   width: max-content;
+  cursor: pointer;
 }
 .new-releases__container .new-release img {
   width: 100%;
   max-width: 153px;
+  transition: filter 150ms linear;
   margin-bottom: 0.5em;
 }
 .new-releases__container .new-release p {
@@ -433,7 +444,7 @@ aside {
 @media (min-width: 900px) {
   aside {
     display: grid;
-    grid-template: repeat(3, auto)/auto auto 1fr auto;
+    grid-template: repeat(3, auto)/minmax(auto, 68px) auto 1fr auto;
     grid-template-areas: "icons icons icons icons" "img text . volume" ". . seek .";
     gap: 0 1em;
   }
@@ -512,6 +523,7 @@ aside .seek input {
 aside > img {
   width: min(25%, 68px);
   grid-area: img;
+  border-radius: 14px;
 }
 @media (min-width: 900px) {
   aside > img {
