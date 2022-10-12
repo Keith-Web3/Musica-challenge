@@ -1,3 +1,5 @@
+import SPOTIFY_API_KEY from './apikey.js'
+
 const nav = document.querySelector('nav')
 const ranges = document.querySelectorAll('input[type=range]')
 const audio = document.querySelector('audio')
@@ -80,7 +82,7 @@ const lazyLoader = new IntersectionObserver(
 const options = {
   method: 'GET',
   headers: {
-    'X-RapidAPI-Key': '68ca7f80e9mshdaca8240d43ab1ap178984jsn99d2a212d1c9',
+    'X-RapidAPI-Key': SPOTIFY_API_KEY,
     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com',
   },
 }
