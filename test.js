@@ -1,3 +1,0 @@
-const SPOTIFY_API_KEY = '68ca7f80e9mshdaca8240d43ab1ap178984jsn99d2a212d1c9'
-
-export default SPOTIFY_API_KEY
