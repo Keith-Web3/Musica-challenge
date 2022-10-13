@@ -61,11 +61,28 @@ select {
 }
 body,
 html {
+  background-color: #1d2123;
   overflow-x: hidden;
 }
 
+* {
+  animation-name: fade-in;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 body {
-  background-color: #1d2123;
   padding: 1em 1em 7em;
   font-family: "Quicksand", "Nunito", Verdana, Geneva, Tahoma, sans-serif;
   color: #efeee0;
@@ -325,6 +342,17 @@ header nav li:hover p {
   gap: 1em;
   overflow-x: auto;
 }
+.section-one .top-charts .top-charts__container::-webkit-scrollbar {
+  height: 5px;
+}
+.section-one .top-charts .top-charts__container::-webkit-scrollbar-track {
+  background-color: #343b3f;
+  border-radius: 10px;
+}
+.section-one .top-charts .top-charts__container::-webkit-scrollbar-thumb {
+  background-color: #111415;
+  border-radius: 10px;
+}
 @media (min-width: 1050px) {
   .section-one .top-charts .top-charts__container {
     display: flex;
@@ -409,8 +437,20 @@ header nav li:hover p {
 .new-releases__container {
   display: grid;
   grid-auto-flow: column;
+  padding-bottom: 0.5em;
   gap: 1em;
   overflow-x: auto;
+}
+.new-releases__container::-webkit-scrollbar {
+  height: 5px;
+}
+.new-releases__container::-webkit-scrollbar-track {
+  background-color: #343b3f;
+  border-radius: 10px;
+}
+.new-releases__container::-webkit-scrollbar-thumb {
+  background-color: #111415;
+  border-radius: 10px;
 }
 .new-releases__container .new-release {
   font-size: 0.875rem;
@@ -440,6 +480,7 @@ aside {
   position: fixed;
   padding: 1em;
   inset: auto 0 0;
+  z-index: 10;
 }
 @media (min-width: 900px) {
   aside {
@@ -564,6 +605,14 @@ aside .icons i {
   color: #facd66;
   font-size: 2rem;
 }
+aside .icons i.tablet {
+  color: #fff;
+  font-size: 20px;
+  transition: color 200ms linear;
+}
+aside .icons i.tablet.active {
+  color: #facd66;
+}
 aside .icons img {
   cursor: pointer;
   min-width: 25px;
@@ -579,6 +628,10 @@ aside .icons .tablet {
 
 audio {
   display: none;
+}
+
+.top-charts::-webkit-scrollbar {
+  width: 3px;
 }
 
 /*# sourceMappingURL=index.css.map */
