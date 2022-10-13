@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Musica</title>
+    <link rel="icon" href="./images/COVER 1.png" />
+    <link rel="stylesheet" href="./dist/css/album.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="album.js" type="module"></script>
+  </head>
+  <body>
+    <header>
+      <input
+        type="text"
+        aria-label="search"
+        name="search"
+        id="search"
+        placeholder="Search here"
+      />
+      <i class="fa-solid fa-bars harmburger-toggle"></i>
+      <img src="./icons/logo.svg" alt="logo" />
+      <nav>
+        <i class="fa-solid fa-xmark harmburger-toggle"></i>
+        <ul>
+          <li>
+            <i class="fa-solid fa-house"></i>
+            <p>Home</p>
+          </li>
+          <li>
+            <i class="fa-brands fa-spotify"></i>
+            <p>My collections</p>
+          </li>
+          <li>
+            <i class="fa-solid fa-radio"></i>
+            <p>Radio</p>
+          </li>
+          <li>
+            <i class="fa-solid fa-photo-film"></i>
+            <p>Music videos</p>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <i class="fa-solid fa-user"></i>
+            <p>Profile</p>
+          </li>
+          <li>
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <p>Log out</p>
+          </li>
+        </ul>
+      </nav>
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </header>
+    <main>
+      <section class="hero-section">
+        <img src="./images/Lead-imageTomorrow tunes.png" alt="hero-image" />
+        <div class="hero-section__text">
+          <h1>Tomorrow’s tunes</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+            purus sit amet luctus venenatis
+          </p>
+          <p>64 songs ~ 16 hrs+</p>
+          <div class="buttons-container">
+            <div class="button">
+              <img src="./icons/play-icon-rounded.svg" alt="play" />
+              <p>Play all</p>
+            </div>
+            <div class="button">
+              <img src="./icons/music-square-add.svg" alt="add to collection" />
+              <p>Add to collection</p>
+            </div>
+            <div class="button">
+              <img src="./icons/love-icon.svg" alt="like" />
+              <p>Like</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="albums">
+        <div class="music">
+          <img src="./images/Rectangle 14 (1).png" alt="image" />
+          <img src="./icons/love-icon-white.svg" alt="like" />
+          <p class="name">Let me love you ~ Krisx</p>
+          <p class="title">Single</p>
+          <p class="duration">4:17</p>
+          <img src="./icons/more-vertical.svg" alt="more" />
+        </div>
+        <div class="music">
+          <img src="./images/Rectangle 14 (2).png" alt="image" />
+          <img src="./icons/love-icon-white.svg" alt="like" />
+          <p class="name">Watin man go do ~ Burna</p>
+          <p class="title">African Giant</p>
+          <p class="duration">4:17</p>
+          <img src="./icons/more-vertical.svg" alt="more" />
+        </div>
+        <div class="music">
+          <img src="./images/Rectangle 14 (3).png" alt="image" />
+          <img src="./icons/love-icon-white.svg" alt="like" />
+          <p class="name">Stand strong ~ Davido</p>
+          <p class="title">Single</p>
+          <p class="duration">4:17</p>
+          <img src="./icons/more-vertical.svg" alt="more" />
+        </div>
+      </section>
+    </main>
+    <aside>
+      <img src="./images/Rectangle 17.png" alt="current music" />
+      <div class="text">
+        <p class="text__title">Seasons in</p>
+        <p class="text__artist">James</p>
+      </div>
+      <div class="icons">
+        <i class="fa-solid fa-shuffle tablet" id="shuffle"></i>
+        <img
+          src="./icons/previous.svg"
+          alt="previous"
+          class="tablet"
+          id="previous"
+        />
+        <i
+          class="fa-solid fa-circle-play"
+          id="play"
+          data-playboolean="true"
+        ></i>
+        <img src="./icons/next.svg" alt="next" id="next" />
+        <i class="fa-solid fa-repeat tablet" id="repeat"></i>
+      </div>
+      <div class="volume">
+        <img src="./icons/volume-high.svg" alt="volume" />
+        <div class="volume__container">
+          <input type="range" name="volume" id="volume" value="0" />
+        </div>
+      </div>
+      <div class="seek">
+        <input aria-label="seek" name="seek" type="range" id="seek" value="0" />
+      </div>
+    </aside>
+  </body>
+</html>
