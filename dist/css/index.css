@@ -65,9 +65,9 @@ html {
   overflow-x: hidden;
 }
 
-* {
+body {
   animation-name: fade-in;
-  animation-duration: 500ms;
+  animation-duration: 1000ms;
   animation-timing-function: linear;
   animation-iteration-count: 1;
 }
@@ -75,11 +75,9 @@ html {
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(-5px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 body {
@@ -365,17 +363,19 @@ header nav li:hover p {
   display: grid;
   grid-template: repeat(4, auto)/repeat(2, auto);
   grid-template-areas: "img like" "name ." "artist ." "time .";
-  column-gap: 1em;
+  column-gap: 2em;
   background-color: #1a1e1f;
   border-radius: 20px;
   width: max-content;
   padding: 1em;
+  cursor: pointer;
 }
 @media (min-width: 1050px) {
   .section-one .top-charts .top-charts__container .top-chart {
     width: 100%;
     grid-template: repeat(3, auto)/auto 1fr auto;
     grid-template-areas: "img name like" "img artist like" "img  time like";
+    align-items: center;
   }
 }
 .section-one .top-charts .top-charts__container .top-chart h3 {
@@ -405,7 +405,9 @@ header nav li:hover p {
 }
 .section-one .top-charts .top-charts__container .top-chart__cover {
   grid-area: img;
-  width: min(50%, 105px);
+  width: 60%;
+  max-width: 105px;
+  border-radius: 12px;
 }
 @media (min-width: 1050px) {
   .section-one .top-charts .top-charts__container .top-chart__cover {

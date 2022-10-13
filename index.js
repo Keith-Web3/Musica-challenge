@@ -13,6 +13,9 @@ const repeatBtn = document.querySelector('#repeat')
 const shuffleBtn = document.querySelector('#shuffle')
 const nextBtn = document.querySelector('#next')
 const previousBtn = document.querySelector('#previous')
+const topCharts = document.querySelectorAll('.top-chart')
+const searchBar = document.querySelector('#search')
+const searchContainer = document.querySelector('.your-search__container')
 
 let seekInterval
 container.innerHTML = ''
@@ -100,13 +103,14 @@ const options = {
   },
 }
 
-async function getMusicPlaylist() {
+async function getMusicPlaylist(id, container) {
   let res = await fetch(
-    'https://spotify23.p.rapidapi.com/playlist_tracks/?id=2cp7ddwhaxSJIKcb9Z8lUd&offset=0&limit=100',
+    `https://spotify23.p.rapidapi.com/playlist_tracks/?id=${id}&offset=0&limit=100`,
     options
   )
   let data = await res.json()
   let { items } = data
+  container.innerHTML = ''
   items.forEach(({ track }) => {
     let {
       album: {
@@ -118,12 +122,12 @@ async function getMusicPlaylist() {
     } = track
     container.innerHTML += `<div class="new-release" data-audio="${preview_url}">
                               <img src="${url1}" alt="" style="border-radius: 25px; filter: blur(2px);" data-src="${url}" class="ger"/>
-                              <p title='${name}'>${name
-      .slice(0, 15)
-      .padEnd(18, '...')}</p>
-                              <p class="sub-text" title='${artist}'>${artist
-      .slice(0, 25)
-      .padEnd(28, '...')}</p>
+                              <p title='${name}'>${
+      name.length > 15 ? name.slice(0, 16).padEnd(18, '...') : name
+    }</p>
+                              <p class="sub-text" title='${artist}'>${
+      artist.length > 15 ? artist.slice(0, 16).padEnd(18, '...') : artist
+    }</p>
                             </div>`
   })
   Array.from(container.children).forEach(child => {
@@ -131,8 +135,8 @@ async function getMusicPlaylist() {
     lazyLoader.observe(child.firstElementChild)
   })
 }
-getMusicPlaylist()
-function chooseSong(releaseContainer) {
+getMusicPlaylist('4XuvWxk9sq6YpvUAYwZKbw', container)
+function chooseSong(releaseContainer, src, title, artist) {
   if (audio.src === releaseContainer.dataset.audio) return
   currSong = releaseContainer
   pause.call(playBtn)
@@ -144,9 +148,10 @@ function chooseSong(releaseContainer) {
     `${audio.volume * 100}%`
   )
   ranges[0].value = audio.volume * 100
-  currMusicImg.src = releaseContainer.firstElementChild.src
-  currMusicTitle.textContent = releaseContainer.children[1].textContent
-  currMusicArtist.textContent = releaseContainer.lastElementChild.textContent
+  currMusicImg.src = src || releaseContainer.firstElementChild.src
+  currMusicTitle.textContent = title || releaseContainer.children[1].textContent
+  currMusicArtist.textContent =
+    artist || releaseContainer.lastElementChild.textContent
 }
 document.body.addEventListener('click', function (e) {
   if (!e.target.closest('.new-release')) return
@@ -193,4 +198,35 @@ previousBtn.addEventListener('click', function () {
   let previousSong = currSong.previousElementSibling
   if (!previousSong) return
   chooseSong(previousSong)
+})
+topCharts.forEach(chart => {
+  chart.addEventListener('click', function () {
+    let chartChildren = [...chart.children]
+    console.log(chartChildren[3].src)
+    chooseSong(
+      chart,
+      chartChildren[3].src,
+      chartChildren[0].textContent,
+      chartChildren[1].textContent
+    )
+  })
+})
+searchBar.addEventListener('keydown', async function (e) {
+  if (e.key !== 'Enter' || this.value.trim() === '') return
+  const res = await fetch(
+    `https://spotify23.p.rapidapi.com/search/?q=${this.value}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
+    options
+  )
+  const {
+    playlists: {
+      items: [
+        {
+          data: { uri },
+        },
+      ],
+    },
+  } = await res.json()
+  let id = uri.match(/:[0-9a-zA-Z]+$/g)
+  console.log()
+  getMusicPlaylist(id[0].slice(1), searchContainer)
 })

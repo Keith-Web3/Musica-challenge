@@ -6,20 +6,18 @@ html {
   overflow-x: hidden;
   background-color: #1d2123;
 }
-* {
+body {
   animation-name: fade-in;
-  animation-duration: 500ms;
+  animation-duration: 1000ms;
   animation-timing-function: linear;
   animation-iteration-count: 1;
 }
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(-5px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 body {
@@ -195,11 +193,18 @@ main {
   margin-top: $spacer * 1.5;
 }
 .hero-section {
+  @media (min-width: 735px) {
+    display: flex;
+    align-items: flex-end;
+    gap: $spacer;
+  }
   & > img {
     width: 100%;
+    max-width: 390px;
   }
   &__text {
     margin-block: $spacer;
+    max-width: 530px;
     h1 {
       font-size: 1.8rem;
       color: #a4c7c6;
@@ -208,6 +213,9 @@ main {
       color: #efeee0;
       &:nth-child(2) {
         margin-block: $spacer * 0.3 $spacer * 0.5;
+        @media (min-width: 735px) {
+          margin-bottom: $spacer;
+        }
       }
     }
   }
@@ -218,6 +226,9 @@ main {
     gap: $spacer;
     justify-content: space-between;
     margin-top: $spacer;
+    @media (min-width: 735px) {
+      justify-content: start;
+    }
 
     .button {
       display: flex;
