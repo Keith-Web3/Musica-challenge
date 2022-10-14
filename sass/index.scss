@@ -5,6 +5,15 @@ body,
 html {
   background-color: #1d2123;
   overflow-x: hidden;
+  ::-webkit-scrollbar {
+    width: 15px;
+    &-track {
+      background-color: lighten(#1d2123, 10%);
+    }
+    &-thumb {
+      background-color: darken(#1d2123, 5%);
+    }
+  }
 }
 body {
   animation-name: fade-in;

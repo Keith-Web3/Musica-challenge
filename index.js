@@ -18,7 +18,6 @@ const searchBar = document.querySelector('#search')
 const searchContainer = document.querySelector('.your-search__container')
 
 let seekInterval
-container.innerHTML = ''
 let currSong
 
 document.querySelectorAll('.harmburger-toggle').forEach(el => {
@@ -104,36 +103,42 @@ const options = {
 }
 
 async function getMusicPlaylist(id, container) {
-  let res = await fetch(
-    `https://spotify23.p.rapidapi.com/playlist_tracks/?id=${id}&offset=0&limit=100`,
-    options
-  )
-  let data = await res.json()
-  let { items } = data
-  container.innerHTML = ''
-  items.forEach(({ track }) => {
-    let {
-      album: {
-        images: [{ url }, , { url: url1 }],
-        name: artist,
-      },
-      name,
-      preview_url,
-    } = track
-    container.innerHTML += `<div class="new-release" data-audio="${preview_url}">
-                              <img src="${url1}" alt="" style="border-radius: 25px; filter: blur(2px);" data-src="${url}" class="ger"/>
-                              <p title='${name}'>${
-      name.length > 15 ? name.slice(0, 16).padEnd(18, '...') : name
-    }</p>
-                              <p class="sub-text" title='${artist}'>${
-      artist.length > 15 ? artist.slice(0, 16).padEnd(18, '...') : artist
-    }</p>
-                            </div>`
-  })
-  Array.from(container.children).forEach(child => {
-    child.firstElementChild.style.width = '153px'
-    lazyLoader.observe(child.firstElementChild)
-  })
+  try {
+    let res = await fetch(
+      `https://spotify23.p.rapidapi.com/playlist_tracks/?id=${id}&offset=0&limit=100`,
+      options
+    )
+    if (!res.ok) throw new Error('Too many requests, try again later')
+    let data = await res.json()
+    let { items } = data
+    container.innerHTML = ''
+    items.forEach(({ track }) => {
+      let {
+        album: {
+          images: [{ url }, , { url: url1 }],
+          name: artist,
+        },
+        name,
+        preview_url,
+      } = track
+      container.innerHTML += `<div class="new-release" data-audio="${preview_url}">
+                                <img src="${url1}" alt="" style="border-radius: 25px; filter: blur(2px);" data-src="${url}" class="ger"/>
+                                <p title='${name}'>${
+        name.length > 15 ? name.slice(0, 16).padEnd(18, '...') : name
+      }</p>
+                                <p class="sub-text" title='${artist}'>${
+        artist.length > 15 ? artist.slice(0, 16).padEnd(18, '...') : artist
+      }</p>
+                              </div>`
+    })
+    Array.from(container.children).forEach(child => {
+      child.firstElementChild.style.width = '153px'
+      lazyLoader.observe(child.firstElementChild)
+    })
+  } catch (err) {
+    console.error(err.message)
+    window.alert(err)
+  }
 }
 getMusicPlaylist('4XuvWxk9sq6YpvUAYwZKbw', container)
 function chooseSong(releaseContainer, src, title, artist) {
@@ -213,20 +218,28 @@ topCharts.forEach(chart => {
 })
 searchBar.addEventListener('keydown', async function (e) {
   if (e.key !== 'Enter' || this.value.trim() === '') return
-  const res = await fetch(
-    `https://spotify23.p.rapidapi.com/search/?q=${this.value}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
-    options
-  )
-  const {
-    playlists: {
-      items: [
-        {
-          data: { uri },
-        },
-      ],
-    },
-  } = await res.json()
-  let id = uri.match(/:[0-9a-zA-Z]+$/g)
-  console.log()
-  getMusicPlaylist(id[0].slice(1), searchContainer)
+  try {
+    const res = await fetch(
+      `https://spotify23.p.rapidapi.com/search/?q=${this.value}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
+      options
+    )
+    if (!res.ok) {
+      if (res.status === 429)
+        throw new Error('Error 429: Too many requests, try again later')
+    }
+    const {
+      playlists: {
+        items: [
+          {
+            data: { uri },
+          },
+        ],
+      },
+    } = await res.json()
+    let id = uri.match(/:[0-9a-zA-Z]+$/g)
+    getMusicPlaylist(id[0].slice(1), searchContainer)
+  } catch (err) {
+    console.error(err)
+    window.alert(err)
+  }
 })

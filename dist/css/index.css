@@ -64,6 +64,18 @@ html {
   background-color: #1d2123;
   overflow-x: hidden;
 }
+body ::-webkit-scrollbar,
+html ::-webkit-scrollbar {
+  width: 15px;
+}
+body ::-webkit-scrollbar-track,
+html ::-webkit-scrollbar-track {
+  background-color: #343b3f;
+}
+body ::-webkit-scrollbar-thumb,
+html ::-webkit-scrollbar-thumb {
+  background-color: #111415;
+}
 
 body {
   animation-name: fade-in;

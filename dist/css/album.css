@@ -266,31 +266,39 @@ main {
   .hero-section {
     display: flex;
     align-items: flex-end;
-    gap: 1em;
+    gap: 2em;
+    margin-block: 3em 2em;
   }
 }
 .hero-section > img {
   width: 100%;
   max-width: 390px;
+  margin-inline: auto;
+}
+@media (min-width: 735px) {
+  .hero-section > img {
+    margin-inline: 0;
+    max-width: 340px;
+  }
 }
 .hero-section__text {
   margin-block: 1em;
-  max-width: 530px;
+  max-width: 600px;
 }
 .hero-section__text h1 {
   font-size: 1.8rem;
   color: #a4c7c6;
 }
+@media (min-width: 735px) {
+  .hero-section__text h1 {
+    font-size: 2.5rem;
+  }
+}
 .hero-section__text p {
   color: #efeee0;
 }
-.hero-section__text p:nth-child(2) {
+.hero-section__text > p:nth-child(2) {
   margin-block: 0.3em 0.5em;
-}
-@media (min-width: 735px) {
-  .hero-section__text p:nth-child(2) {
-    margin-bottom: 1em;
-  }
 }
 .hero-section .buttons-container {
   display: flex;
@@ -303,6 +311,7 @@ main {
 @media (min-width: 735px) {
   .hero-section .buttons-container {
     justify-content: start;
+    margin-top: 2.5em;
   }
 }
 .hero-section .buttons-container .button {
@@ -316,8 +325,17 @@ main {
   width: max-content;
   cursor: pointer;
 }
+@media (min-width: 735px) {
+  .hero-section .buttons-container .button {
+    padding-block: 0.7em;
+  }
+}
 .hero-section .buttons-container .button img {
   width: 20px;
+}
+
+main {
+  width: 100%;
 }
 
 .albums .music {
@@ -325,14 +343,21 @@ main {
   column-gap: 1em;
   grid-template: repeat(2, auto)/minmax(18%, 64px) 1fr auto;
   grid-template-areas: "img name select" "img title duration";
+  align-items: center;
   margin-bottom: 1em;
   background-color: rgba(51, 55, 59, 0.37);
   backdrop-filter: blur(5px);
   border-radius: 10px;
   padding: 0.7em;
 }
-.albums .music > * {
-  margin-block: auto;
+@media (min-width: 630px) {
+  .albums .music {
+    display: grid;
+    grid-template: 1fr/min(10%, 85px) auto repeat(3, minmax(max-content, 2fr)) minmax(max-content, 1fr);
+    grid-template-areas: "img like name title duration select";
+    justify-items: center;
+    justify-content: space-between;
+  }
 }
 .albums .music img:first-child {
   grid-area: img;
@@ -340,6 +365,11 @@ main {
 }
 .albums .music img:nth-of-type(2) {
   display: none;
+}
+@media (min-width: 630px) {
+  .albums .music img:nth-of-type(2) {
+    display: block;
+  }
 }
 .albums .music img:nth-of-type(3) {
   grid-area: select;
@@ -363,6 +393,7 @@ aside {
   gap: 1em;
   background-color: rgba(29, 33, 35, 0.3);
   backdrop-filter: blur(15px);
+  filter: drop-shadow(0px -25px 100px rgba(16, 16, 16, 0.51));
   position: fixed;
   padding: 1em;
   inset: auto 0 0;
