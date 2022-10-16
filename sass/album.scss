@@ -27,6 +27,7 @@ body {
   position: relative;
   background: linear-gradient(180deg, rgba(29, 33, 35, 0.8) 0%, #1d2123 61.48%),
     url(../../images/Lead-imageTomorrow\ tunes.png);
+  transition: background-image 200ms linear;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -274,6 +275,7 @@ main {
     backdrop-filter: blur(5px);
     border-radius: 10px;
     padding: $spacer * 0.7;
+    cursor: pointer;
     @media (min-width: 630px) {
       display: grid;
       grid-template:
@@ -465,4 +467,7 @@ aside {
       }
     }
   }
+}
+audio {
+  display: none;
 }

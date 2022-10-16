@@ -197,11 +197,32 @@ shuffleBtn.addEventListener('click', function () {
 nextBtn.addEventListener('click', function () {
   let nextSong = currSong.nextElementSibling
   if (!nextSong) return
+  if (nextSong.classList.contains('top-chart')) {
+    let children = nextSong.children
+    chooseSong(
+      nextSong,
+      children[3].src,
+      children[0].textContent,
+      children[1].textContent
+    )
+    return
+  }
   chooseSong(nextSong)
 })
 previousBtn.addEventListener('click', function () {
   let previousSong = currSong.previousElementSibling
   if (!previousSong) return
+  if (previousSong.classList.contains('top-chart')) {
+    let children = previousSong.children
+    console.log(children)
+    chooseSong(
+      previousSong,
+      children[3].src,
+      children[0].textContent,
+      children[1].textContent
+    )
+    return
+  }
   chooseSong(previousSong)
 })
 topCharts.forEach(chart => {
@@ -225,7 +246,9 @@ searchBar.addEventListener('keydown', async function (e) {
     )
     if (!res.ok) {
       if (res.status === 429)
-        throw new Error('Error 429: Too many requests, try again later')
+        throw new Error(
+          'Error 429: Too many requests!! Unable to fetch album, please try again later'
+        )
     }
     const {
       playlists: {
