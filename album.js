@@ -1,3 +1,5 @@
+import SPOTIFY_API_KEY from './apikey.js'
+
 const nav = document.querySelector('nav')
 const ranges = document.querySelectorAll('input[type=range]')
 const navItems = document.querySelectorAll('nav li')
@@ -7,9 +9,17 @@ const albums = document.querySelector('.albums')
 const searchBar = document.querySelector('#search')
 const playBtn = document.querySelector('#play')
 const audio = document.querySelector('#audio')
-let aside = document.querySelector('aside')
+const repeatBtn = document.querySelector('#repeat')
+const shuffleBtn = document.querySelector('#shuffle')
+const nextBtn = document.querySelector('#next')
+const previousBtn = document.querySelector('#previous')
+const playAllBtn = document.querySelector('.play-all')
+const aside = document.querySelector('aside')
+const addToCollections = document.querySelector('.add-to-collections')
+const likeAlbum = document.querySelector('.like-album')
 
 let seekInterval
+let currSong
 
 document.querySelectorAll('.harmburger-toggle').forEach(el => {
   el.addEventListener('click', function () {
@@ -40,20 +50,20 @@ navItems.forEach((item, idx) => {
   item.addEventListener('click', function () {
     if (idx === 0) window.location = 'index.html'
     if (idx === 1) window.location = 'album.html'
+    if (idx === 2) window.location = 'collections.html'
   })
 })
 
 const options = {
   method: 'GET',
   headers: {
-    'X-RapidAPI-Key': '2d63567ec9msh25bcd1a15aa4690p17b84djsnb2a05dff6a06',
+    'X-RapidAPI-Key': SPOTIFY_API_KEY,
     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com',
   },
 }
-searchBar.addEventListener('keydown', async function (e) {
-  if (e.key !== 'Enter' || this.value === '') return
+async function fetchSong(search) {
   let res = await fetch(
-    `https://spotify23.p.rapidapi.com/search/?q=${this.value.replace(
+    `https://spotify23.p.rapidapi.com/search/?q=${search.replace(
       ' ',
       '%20'
     )}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
@@ -74,21 +84,50 @@ searchBar.addEventListener('keydown', async function (e) {
     `https://spotify23.p.rapidapi.com/albums/?ids=${id}`,
     options
   )
+  let data = await albumRes.json()
   let {
     albums: [
       {
         images: [{ url }, , { url: url1 }],
         name,
+        popularity,
         tracks: { items },
       },
     ],
-  } = await albumRes.json()
+  } = data
+  console.log(data)
   coverImage.src = url1
   coverImage.dataset.src = url
   coverImage.style.filter = 'blur(5px)'
   coverImage.style.borderRadius = '35.1703px'
   lazyLoader.observe(coverImage)
   albumName.textContent = name
+
+  let obj = {
+    [name]: {
+      img: url,
+      name: items[0].artists[0].name,
+      likes: popularity,
+    },
+  }
+  addToCollections.addEventListener('click', function () {
+    let newObj = { ...JSON.parse(localStorage.getItem('#16102022AcE')), obj }
+    Object.hasOwn(
+      JSON.parse(localStorage.getItem('#16102022AcE')) || {},
+      'name'
+    )
+      ? null
+      : localStorage.setItem('#16102022AcE', JSON.stringify(newObj))
+  })
+  likeAlbum.addEventListener('click', function () {
+    let newObj = { ...JSON.parse(localStorage.getItem('#16102022AdE')), obj }
+    Object.hasOwn(
+      JSON.parse(localStorage.getItem('#16102022AdE')) || {},
+      'name'
+    )
+      ? null
+      : localStorage.setItem('#16102022AdE', JSON.stringify(newObj))
+  })
 
   albums.innerHTML = ''
   items.forEach(
@@ -107,9 +146,14 @@ searchBar.addEventListener('keydown', async function (e) {
                           </div>`
     }
   )
+}
+searchBar.addEventListener('keydown', async function (e) {
+  if (e.key !== 'Enter' || this.value === '') return
+  fetchSong(this.value)
 })
 function chooseSong(song) {
   if (audio.src === song.dataset.audio) return
+  currSong = song
   pause.call(playBtn)
   ranges[1].parentElement.style.setProperty('--progress', `0%`)
   ranges[1].value = 0
@@ -145,6 +189,26 @@ audio.addEventListener('play', function () {
 audio.addEventListener('pause', function () {
   pause.call(playBtn)
 })
+function autoPlay() {
+  play.call(playBtn)
+  audio.removeEventListener('durationchange', autoPlay)
+}
+audio.addEventListener('ended', function () {
+  repeatBtn.classList.contains('active') ? audio.play() : null
+  if (shuffleBtn.classList.contains('active')) {
+    let randomChild = [...albums.children][
+      Math.floor(Math.random() * albums.children.length)
+    ]
+    chooseSong(randomChild)
+    audio.addEventListener('durationchange', autoPlay)
+  }
+  if (playAllBtn.classList.contains('active')) {
+    let nextSong = currSong.nextElementSibling
+    if (!nextSong) return
+    chooseSong(nextSong)
+    audio.addEventListener('durationchange', autoPlay)
+  }
+})
 function pause() {
   this.classList.remove('fa-circle-pause')
   this.classList.add('fa-circle-play')
@@ -172,3 +236,37 @@ ranges.forEach((el, idx) => {
     if (audio.duration) audio.currentTime = (el.value / 100) * audio.duration
   })
 })
+playAllBtn.addEventListener('click', function () {
+  this.classList.toggle('active')
+  shuffleBtn.classList.remove('active')
+  repeatBtn.classList.remove('active')
+  if (this.classList.contains('active')) {
+    chooseSong(albums.firstElementChild)
+    audio.addEventListener('durationchange', autoPlay)
+  }
+})
+repeatBtn.addEventListener('click', function () {
+  this.classList.toggle('active')
+  shuffleBtn.classList.remove('active')
+  playAllBtn.classList.remove('active')
+})
+shuffleBtn.addEventListener('click', function () {
+  this.classList.toggle('active')
+  repeatBtn.classList.remove('active')
+  playAllBtn.classList.remove('active')
+})
+nextBtn.addEventListener('click', function () {
+  let nextSong = currSong.nextElementSibling
+  if (!nextSong) return
+  chooseSong(nextSong)
+})
+previousBtn.addEventListener('click', function () {
+  let previousSong = currSong.previousElementSibling
+  if (!previousSong) return
+  chooseSong(previousSong)
+})
+let currentAlbum = JSON.parse(sessionStorage.getItem('currentAlbum'))
+if (currentAlbum) {
+  fetchSong(currentAlbum)
+  sessionStorage.removeItem('currentAlbum')
+}

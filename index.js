@@ -29,6 +29,7 @@ navItems.forEach((item, idx) => {
   item.addEventListener('click', function () {
     if (idx === 0) window.location = 'index.html'
     if (idx === 1) window.location = 'album.html'
+    if (idx === 2) window.location = 'collections.html'
   })
 })
 

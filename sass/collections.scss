@@ -25,12 +25,6 @@ body {
   font-family: 'Quicksand', 'Nunito', Verdana, Geneva, Tahoma, sans-serif;
   color: #efeee0;
   position: relative;
-  background: linear-gradient(180deg, rgba(29, 33, 35, 0.8) 0%, #1d2123 61.48%),
-    url(../../images/Lead-imageTomorrow\ tunes.png);
-  transition: background-image 200ms linear;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
   @media (min-width: 1050px) {
     display: flex;
     gap: $spacer * 2;
@@ -191,136 +185,143 @@ header {
   }
 }
 main {
-  margin-top: $spacer * 1.5;
-}
-.hero-section {
-  @media (min-width: 735px) {
+  margin-top: $spacer;
+
+  @media (min-width: 800px) {
+    margin-top: $spacer * 4.5;
+  }
+  .nav-container {
     display: flex;
-    align-items: flex-end;
-    gap: $spacer * 2;
-    margin-block: $spacer * 3 $spacer * 2;
-  }
-  & > img {
-    width: 100%;
-    max-width: 390px;
-    margin-inline: auto;
-    @media (min-width: 735px) {
-      margin-inline: 0;
-      max-width: 340px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacer;
+    @media (min-width: 400px) {
+      gap: $spacer;
+      justify-content: center;
     }
-  }
-  &__text {
-    margin-block: $spacer;
-    max-width: 600px;
-    h1 {
-      font-size: 1.8rem;
-      color: #a4c7c6;
-      @media (min-width: 735px) {
-        font-size: 2.5rem;
-      }
+    @media (min-width: 800px) {
+      justify-content: flex-start;
     }
+
     p {
       color: #efeee0;
-    }
-    & > p {
-      &:nth-child(2) {
-        margin-block: $spacer * 0.3 $spacer * 0.5;
-      }
-    }
-  }
-  .buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: $spacer;
-    justify-content: space-between;
-    margin-top: $spacer;
-    @media (min-width: 735px) {
-      justify-content: start;
-      margin-top: $spacer * 2.5;
-    }
-
-    .button {
-      display: flex;
-      font-size: 0.857rem;
-      gap: $spacer * 0.625;
-      background-color: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(5px);
-      transition: background-color 200ms linear;
-      padding: $spacer * 0.5 $spacer * 1.25;
-      border-radius: 32px;
-      width: max-content;
+      border: 1px solid #efeee0;
+      border-radius: 27px;
+      padding: $spacer * 0.7 $spacer * 2.5;
+      gap: $spacer;
       cursor: pointer;
-      &.active {
-        background-color: rgba(255, 255, 255, 0.27);
-      }
-      @media (min-width: 735px) {
-        padding-block: $spacer * 0.7;
+      @media (max-width: 350px) {
+        padding-inline: 0;
+        width: 40%;
+        &:first-child {
+          width: 55%;
+        }
+        text-align: center;
       }
 
-      img {
-        width: 20px;
+      &.active {
+        background: #facd66;
+        color: #1d2123;
+        border: none;
       }
     }
   }
-}
-main {
-  width: 100%;
-}
-.albums {
-  .music {
-    display: grid;
-    column-gap: $spacer;
-    grid-template: repeat(2, auto) / minmax(18%, 64px) 1fr auto;
-    grid-template-areas: 'img name select' 'img title duration';
-    align-items: center;
-    margin-bottom: $spacer;
-    background-color: rgba(51, 55, 59, 0.37);
-    backdrop-filter: blur(5px);
-    border-radius: 10px;
-    padding: $spacer * 0.7;
-    cursor: pointer;
-    @media (min-width: 630px) {
-      display: grid;
-      grid-template:
-        1fr / min(10%, 85px) auto repeat(3, minmax(max-content, 2fr))
-        minmax(max-content, 1fr);
-      grid-template-areas: 'img like name title duration select';
-      justify-items: center;
-      justify-content: space-between;
+  .collections-container {
+    display: none;
+    flex-wrap: wrap;
+    gap: $spacer;
+
+    &.active {
+      display: flex;
+    }
+    @media (min-width: 800px) {
+      gap: $spacer * 2;
     }
 
-    img {
-      &:first-child {
-        grid-area: img;
-        width: 100%;
-        @media (min-width: 630px) {
-          // width: 20%;
+    .album {
+      position: relative;
+      margin-inline: auto;
+      overflow: hidden;
+      border-radius: 20px;
+      width: clamp(252px, 100%, 344px);
+      cursor: pointer;
+      &:has(.text-container:hover) > .img-container img {
+        width: 130%;
+      }
+      @media (min-width: 800px) {
+        width: 213px;
+        margin-inline: 0;
+      }
+
+      .img-container {
+        aspect-ratio: 359 / 234;
+        @media (min-width: 800px) {
+          aspect-ratio: 213 / 234;
+        }
+        img {
+          width: 100%;
+          transition: width 200ms linear;
+
+          @media (min-width: 800px) {
+            height: 100%;
+            object-fit: cover;
+          }
         }
       }
-      &:nth-of-type(2) {
-        display: none;
-        @media (min-width: 630px) {
-          display: block;
+      .darken {
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        background-image: linear-gradient(
+          179.89deg,
+          rgba(0, 0, 0, 0) 0.1%,
+          rgba(15, 18, 19, 0.85) 80.67%
+        );
+
+        &:hover + .img-container {
+          img {
+            width: 130%;
+          }
+        }
+        @media (min-width: 800px) {
+          &:hover ~ .text-container {
+            transform: translateY(0);
+          }
         }
       }
-      &:nth-of-type(3) {
-        grid-area: select;
-        margin-left: auto;
-      }
-    }
-    p {
-      &:first-child {
-        grid-area: name;
-        // font-size: 0.857rem;
-      }
-      &:nth-of-type(2) {
-        grid-area: title;
-        font-size: 0.857rem;
-        // font-size: 0.625rem;
-      }
-      &:nth-of-type(3) {
-        grid-area: duration;
+      .text-container {
+        position: absolute;
+        z-index: 1;
+        inset: auto $spacer $spacer;
+        display: grid;
+        grid-template: repeat(3, auto) / auto 1fr;
+        grid-template-areas: 'header .' 'name .' 'likes play';
+        transition: transform 200ms linear;
+        @media (min-width: 800px) {
+          &:hover {
+            transform: translateY(0);
+          }
+          transform: translateY(50%);
+        }
+
+        h2 {
+          grid-area: header;
+          font-size: 1.714rem;
+          font-weight: 400;
+        }
+        .name {
+          grid-area: name;
+          margin-bottom: $spacer;
+        }
+        .likes {
+          grid-area: likes;
+          font-size: 1.1rem;
+          margin-top: auto;
+        }
+        img {
+          grid-area: play;
+          margin: auto 0 auto auto;
+        }
       }
     }
   }
@@ -471,7 +472,4 @@ aside {
       }
     }
   }
-}
-audio {
-  display: none;
 }

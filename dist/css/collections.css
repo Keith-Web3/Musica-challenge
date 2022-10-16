@@ -85,11 +85,6 @@ body {
   font-family: "Quicksand", "Nunito", Verdana, Geneva, Tahoma, sans-serif;
   color: #efeee0;
   position: relative;
-  background: linear-gradient(180deg, rgba(29, 33, 35, 0.8) 0%, #1d2123 61.48%), url(../../images/Lead-imageTomorrow\ tunes.png);
-  transition: background-image 200ms linear;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
 }
 @media (min-width: 1050px) {
   body {
@@ -260,136 +255,149 @@ header nav li:hover p {
 }
 
 main {
-  margin-top: 1.5em;
-}
-
-@media (min-width: 735px) {
-  .hero-section {
-    display: flex;
-    align-items: flex-end;
-    gap: 2em;
-    margin-block: 3em 2em;
-  }
-}
-.hero-section > img {
-  width: 100%;
-  max-width: 390px;
-  margin-inline: auto;
-}
-@media (min-width: 735px) {
-  .hero-section > img {
-    margin-inline: 0;
-    max-width: 340px;
-  }
-}
-.hero-section__text {
-  margin-block: 1em;
-  max-width: 600px;
-}
-.hero-section__text h1 {
-  font-size: 1.8rem;
-  color: #a4c7c6;
-}
-@media (min-width: 735px) {
-  .hero-section__text h1 {
-    font-size: 2.5rem;
-  }
-}
-.hero-section__text p {
-  color: #efeee0;
-}
-.hero-section__text > p:nth-child(2) {
-  margin-block: 0.3em 0.5em;
-}
-.hero-section .buttons-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1em;
-  justify-content: space-between;
   margin-top: 1em;
 }
-@media (min-width: 735px) {
-  .hero-section .buttons-container {
-    justify-content: start;
-    margin-top: 2.5em;
+@media (min-width: 800px) {
+  main {
+    margin-top: 4.5em;
   }
 }
-.hero-section .buttons-container .button {
+main .nav-container {
   display: flex;
-  font-size: 0.857rem;
-  gap: 0.625em;
-  background-color: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(5px);
-  transition: background-color 200ms linear;
-  padding: 0.5em 1.25em;
-  border-radius: 32px;
-  width: max-content;
-  cursor: pointer;
-}
-.hero-section .buttons-container .button.active {
-  background-color: rgba(255, 255, 255, 0.27);
-}
-@media (min-width: 735px) {
-  .hero-section .buttons-container .button {
-    padding-block: 0.7em;
-  }
-}
-.hero-section .buttons-container .button img {
-  width: 20px;
-}
-
-main {
-  width: 100%;
-}
-
-.albums .music {
-  display: grid;
-  column-gap: 1em;
-  grid-template: repeat(2, auto)/minmax(18%, 64px) 1fr auto;
-  grid-template-areas: "img name select" "img title duration";
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 1em;
-  background-color: rgba(51, 55, 59, 0.37);
-  backdrop-filter: blur(5px);
-  border-radius: 10px;
-  padding: 0.7em;
+}
+@media (min-width: 400px) {
+  main .nav-container {
+    gap: 1em;
+    justify-content: center;
+  }
+}
+@media (min-width: 800px) {
+  main .nav-container {
+    justify-content: flex-start;
+  }
+}
+main .nav-container p {
+  color: #efeee0;
+  border: 1px solid #efeee0;
+  border-radius: 27px;
+  padding: 0.7em 2.5em;
+  gap: 1em;
   cursor: pointer;
 }
-@media (min-width: 630px) {
-  .albums .music {
-    display: grid;
-    grid-template: 1fr/min(10%, 85px) auto repeat(3, minmax(max-content, 2fr)) minmax(max-content, 1fr);
-    grid-template-areas: "img like name title duration select";
-    justify-items: center;
-    justify-content: space-between;
+@media (max-width: 350px) {
+  main .nav-container p {
+    padding-inline: 0;
+    width: 40%;
+    text-align: center;
+  }
+  main .nav-container p:first-child {
+    width: 55%;
   }
 }
-.albums .music img:first-child {
-  grid-area: img;
-  width: 100%;
+main .nav-container p.active {
+  background: #facd66;
+  color: #1d2123;
+  border: none;
 }
-.albums .music img:nth-of-type(2) {
+main .collections-container {
   display: none;
+  flex-wrap: wrap;
+  gap: 1em;
 }
-@media (min-width: 630px) {
-  .albums .music img:nth-of-type(2) {
-    display: block;
+main .collections-container.active {
+  display: flex;
+}
+@media (min-width: 800px) {
+  main .collections-container {
+    gap: 2em;
   }
 }
-.albums .music img:nth-of-type(3) {
-  grid-area: select;
-  margin-left: auto;
+main .collections-container .album {
+  position: relative;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: 20px;
+  width: clamp(252px, 100%, 344px);
+  cursor: pointer;
 }
-.albums .music p:first-child {
+main .collections-container .album:has(.text-container:hover) > .img-container img {
+  width: 130%;
+}
+@media (min-width: 800px) {
+  main .collections-container .album {
+    width: 213px;
+    margin-inline: 0;
+  }
+}
+main .collections-container .album .img-container {
+  aspect-ratio: 359/234;
+}
+@media (min-width: 800px) {
+  main .collections-container .album .img-container {
+    aspect-ratio: 213/234;
+  }
+}
+main .collections-container .album .img-container img {
+  width: 100%;
+  transition: width 200ms linear;
+}
+@media (min-width: 800px) {
+  main .collections-container .album .img-container img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+main .collections-container .album .darken {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background-image: linear-gradient(179.89deg, rgba(0, 0, 0, 0) 0.1%, rgba(15, 18, 19, 0.85) 80.67%);
+}
+main .collections-container .album .darken:hover + .img-container img {
+  width: 130%;
+}
+@media (min-width: 800px) {
+  main .collections-container .album .darken:hover ~ .text-container {
+    transform: translateY(0);
+  }
+}
+main .collections-container .album .text-container {
+  position: absolute;
+  z-index: 1;
+  inset: auto 1em 1em;
+  display: grid;
+  grid-template: repeat(3, auto)/auto 1fr;
+  grid-template-areas: "header ." "name ." "likes play";
+  transition: transform 200ms linear;
+}
+@media (min-width: 800px) {
+  main .collections-container .album .text-container {
+    transform: translateY(50%);
+  }
+  main .collections-container .album .text-container:hover {
+    transform: translateY(0);
+  }
+}
+main .collections-container .album .text-container h2 {
+  grid-area: header;
+  font-size: 1.714rem;
+  font-weight: 400;
+}
+main .collections-container .album .text-container .name {
   grid-area: name;
+  margin-bottom: 1em;
 }
-.albums .music p:nth-of-type(2) {
-  grid-area: title;
-  font-size: 0.857rem;
+main .collections-container .album .text-container .likes {
+  grid-area: likes;
+  font-size: 1.1rem;
+  margin-top: auto;
 }
-.albums .music p:nth-of-type(3) {
-  grid-area: duration;
+main .collections-container .album .text-container img {
+  grid-area: play;
+  margin: auto 0 auto auto;
 }
 
 aside {
@@ -549,8 +557,4 @@ aside .icons .tablet {
   }
 }
 
-audio {
-  display: none;
-}
-
-/*# sourceMappingURL=album.css.map */
+/*# sourceMappingURL=collections.css.map */
