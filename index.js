@@ -251,6 +251,11 @@ searchBar.addEventListener('keydown', async function (e) {
           'Error 429: Too many requests!! Unable to fetch album, please try again later'
         )
     }
+    const resData = await res.json()
+    if (resData.playlists.totalCount === 0)
+      throw new Error(
+        `${this.value} could not be found, please search for another song`
+      )
     const {
       playlists: {
         items: [
@@ -259,7 +264,8 @@ searchBar.addEventListener('keydown', async function (e) {
           },
         ],
       },
-    } = await res.json()
+    } = resData
+    if (data === undefined) throw new Error('Music could not be found')
     let id = uri.match(/:[0-9a-zA-Z]+$/g)
     getMusicPlaylist(id[0].slice(1), searchContainer)
   } catch (err) {
