@@ -30,7 +30,6 @@ const lazyLoader = new IntersectionObserver(
   (entries, lazyLoader) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return
-      console.log('working')
       entry.target.addEventListener('load', function () {
         this.style.width = '100%'
         this.style.filter = 'unset'
@@ -61,24 +60,26 @@ const options = {
     'X-RapidAPI-Host': 'spotify23.p.rapidapi.com',
   },
 }
-async function fetchSong(search) {
-  let res = await fetch(
-    `https://spotify23.p.rapidapi.com/search/?q=${search.replace(
-      ' ',
-      '%20'
-    )}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
-    options
-  )
-  let {
-    albums: {
-      items: [
-        {
-          data: { uri },
-        },
-      ],
-    },
-  } = await res.json()
-  let id = uri.match(/:[0-9a-zA-Z]+$/g)[0].slice(1)
+async function fetchSong(search, id) {
+  if (!id) {
+    let res = await fetch(
+      `https://spotify23.p.rapidapi.com/search/?q=${search.replace(
+        ' ',
+        '%20'
+      )}&type=multi&offset=0&limit=10&numberOfTopResults=5`,
+      options
+    )
+    let {
+      albums: {
+        items: [
+          {
+            data: { uri },
+          },
+        ],
+      },
+    } = await res.json()
+    id = uri.match(/:[0-9a-zA-Z]+$/g)[0].slice(1)
+  }
 
   let albumRes = await fetch(
     `https://spotify23.p.rapidapi.com/albums/?ids=${id}`,
@@ -95,7 +96,6 @@ async function fetchSong(search) {
       },
     ],
   } = data
-  console.log(data)
   coverImage.src = url1
   coverImage.dataset.src = url
   coverImage.style.filter = 'blur(5px)'
@@ -104,29 +104,20 @@ async function fetchSong(search) {
   albumName.textContent = name
 
   let obj = {
-    [name]: {
+    [id]: {
+      name,
       img: url,
-      name: items[0].artists[0].name,
+      name1: items[0].artists[0].name,
       likes: popularity,
     },
   }
   addToCollections.addEventListener('click', function () {
-    let newObj = { ...JSON.parse(localStorage.getItem('#16102022AcE')), obj }
-    Object.hasOwn(
-      JSON.parse(localStorage.getItem('#16102022AcE')) || {},
-      'name'
-    )
-      ? null
-      : localStorage.setItem('#16102022AcE', JSON.stringify(newObj))
+    let newObj = { ...JSON.parse(localStorage.getItem('#16102022AcE')), ...obj }
+    localStorage.setItem('#16102022AcE', JSON.stringify(newObj))
   })
   likeAlbum.addEventListener('click', function () {
-    let newObj = { ...JSON.parse(localStorage.getItem('#16102022AdE')), obj }
-    Object.hasOwn(
-      JSON.parse(localStorage.getItem('#16102022AdE')) || {},
-      'name'
-    )
-      ? null
-      : localStorage.setItem('#16102022AdE', JSON.stringify(newObj))
+    let newObj = { ...JSON.parse(localStorage.getItem('#16102022AdE')), ...obj }
+    localStorage.setItem('#16102022AdE', JSON.stringify(newObj))
   })
 
   albums.innerHTML = ''
@@ -196,8 +187,8 @@ function autoPlay() {
 audio.addEventListener('ended', function () {
   repeatBtn.classList.contains('active') ? audio.play() : null
   if (shuffleBtn.classList.contains('active')) {
-    let randomChild = [...albums.children][
-      Math.floor(Math.random() * albums.children.length)
+    let randomChild = [...currSong.parentElement.children][
+      Math.floor(Math.random() * currSong.parentElement.children.length)
     ]
     chooseSong(randomChild)
     audio.addEventListener('durationchange', autoPlay)
@@ -267,6 +258,6 @@ previousBtn.addEventListener('click', function () {
 })
 let currentAlbum = JSON.parse(sessionStorage.getItem('currentAlbum'))
 if (currentAlbum) {
-  fetchSong(currentAlbum)
+  fetchSong(null, currentAlbum)
   sessionStorage.removeItem('currentAlbum')
 }

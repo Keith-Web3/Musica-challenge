@@ -5,7 +5,7 @@ const navContainer = document.querySelector('.nav-container')
 let albums = document.querySelectorAll('.album')
 
 document.addEventListener('click', function (e) {
-  let album = e.target.closest('.album').dataset.name
+  let album = e.target.closest('.album')?.dataset.id
   console.log(album)
   if (!album) return
   sessionStorage.setItem('currentAlbum', JSON.stringify(album))
@@ -34,8 +34,8 @@ Array.from(navContainer.children).forEach((item, idx) => {
 let collections = JSON.parse(localStorage.getItem('#16102022AcE'))
 let collections1 = JSON.parse(localStorage.getItem('#16102022AdE'))
 if (collections != null) {
-  Object.entries(collections.obj).forEach(([name, obj]) => {
-    container[0].innerHTML += `<div class="album" data-name="${name}">
+  Object.entries(collections).forEach(([id, obj]) => {
+    container[0].innerHTML += `<div class="album" data-id="${id}">
     <div class="darken"></div>
     <div class="img-container">
       <img
@@ -44,15 +44,17 @@ if (collections != null) {
       />
     </div>
     <div class="text-container">
-      <h2>${name.split(/[\s,]/g)[0]}...</h2>
-      <p class="name">${obj.name}</p>
+      <h2 title="${obj.name}">${obj.name.split(/[\s,]/g)[0]}...</h2>
+      <p class="name">${obj.name1}</p>
       <p class="likes">${obj.likes}m likes</p>
       <img src="./icons/Play.svg" alt="play" />
     </div>
   </div>`
   })
-  Object.entries(collections1.obj).forEach(([name, obj]) => {
-    container[1].innerHTML += `<div class="album" data-name="${name}">
+}
+if (collections1 !== null) {
+  Object.entries(collections1).forEach(([id, obj]) => {
+    container[1].innerHTML += `<div class="album" data-name="${id}">
     <div class="darken"></div>
     <div class="img-container">
       <img
@@ -61,8 +63,8 @@ if (collections != null) {
       />
     </div>
     <div class="text-container">
-      <h2>${name.split(/[\s,]/g)[0]}...</h2>
-      <p class="name">${obj.name}</p>
+      <h2 title="${obj.name}">${obj.name.split(/[\s,]/g)[0]}...</h2>
+      <p class="name">${obj.name1}</p>
       <p class="likes">${obj.likes}m likes</p>
       <img src="./icons/Play.svg" alt="play" />
     </div>

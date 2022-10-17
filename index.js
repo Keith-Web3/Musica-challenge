@@ -178,8 +178,8 @@ audio.addEventListener('pause', function () {
 audio.addEventListener('ended', function () {
   repeatBtn.classList.contains('active') ? audio.play() : null
   if (shuffleBtn.classList.contains('active')) {
-    let randomChild = [...container.children][
-      Math.floor(Math.random() * container.children.length)
+    let randomChild = [...currSong.parentElement.children][
+      Math.floor(Math.random() * currSong.parentElement.children.length)
     ]
     chooseSong(randomChild)
     audio.addEventListener('durationchange', () => {
