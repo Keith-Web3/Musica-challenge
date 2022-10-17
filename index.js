@@ -265,7 +265,6 @@ searchBar.addEventListener('keydown', async function (e) {
         ],
       },
     } = resData
-    if (data === undefined) throw new Error('Music could not be found')
     let id = uri.match(/:[0-9a-zA-Z]+$/g)
     getMusicPlaylist(id[0].slice(1), searchContainer)
   } catch (err) {
