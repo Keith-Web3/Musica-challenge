@@ -54,7 +54,7 @@ if (collections != null) {
 }
 if (collections1 !== null) {
   Object.entries(collections1).forEach(([id, obj]) => {
-    container[1].innerHTML += `<div class="album" data-name="${id}">
+    container[1].innerHTML += `<div class="album" data-id="${id}">
     <div class="darken"></div>
     <div class="img-container">
       <img
