@@ -114,6 +114,7 @@ async function getMusicPlaylist(id, container) {
     let { items } = data
     container.innerHTML = ''
     items.forEach(({ track }) => {
+      if (!track) return
       let {
         album: {
           images: [{ url }, , { url: url1 }],
