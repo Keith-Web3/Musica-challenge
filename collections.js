@@ -4,7 +4,7 @@ const container = document.querySelectorAll('.collections-container')
 const navContainer = document.querySelector('.nav-container')
 let albums = document.querySelectorAll('.album')
 
-document.addEventListener('click', function (e) {
+document.body.addEventListener('click', function (e) {
   let album = e.target.closest('.album')?.dataset.id
   console.log(album)
   if (!album) return
